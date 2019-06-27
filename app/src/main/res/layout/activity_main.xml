@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle">
+
+            <!--Layout for picking up date , total leave,leave type etc-->
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="20dp"
+                android:paddingRight="10dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--Layout for leave type and count-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="3"
+                        android:orientation="horizontal">
+                        <!--Layout for leave type-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="2">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/leave_type"
+                                android:layout_marginBottom="4dp"
+                                android:gravity="center"
+                                android:textSize="13sp"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle"
+                                android:padding="5dp"
+                                android:layout_margin="8dp"
+                                android:orientation="vertical">
+
+                                <Spinner
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/leaveTypeSpinnerXML"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <!--Layout for leave count-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="5dp"
+                            android:padding="5dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/leave_count"
+                                android:layout_marginBottom="4dp"
+                                android:textSize="13sp"
+                                android:gravity="center"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="2"
+                                android:textSize="18sp"
+                                android:padding="5dp"
+                                android:layout_margin="8dp"
+                                android:gravity="center"
+                                android:id="@+id/leaveCountXML"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!--Layout for setting the leave date and time-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="2">
+
+                        <!--Setting the leave date-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
+
+                            <!--Layout for start date picking-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/from_date"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="4dp"
+                                    android:textSize="13sp"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:text="Monday-2019"
+                                    android:background="@drawable/rectangle" android:drawableRight="@drawable/ic_action_arrow_drop_down"
+                                    android:drawablePadding="8dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="4dp"
+                                    android:paddingBottom="4dp"
+                                    android:paddingRight="4dp"
+                                    android:id="@+id/textViewForStartDateXML"/>
+
+                            </LinearLayout>
+                            <!--Layout for start date picking-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to_date"
+                                    android:gravity="center"
+                                    android:layout_marginBottom="4dp"
+                                    android:textSize="13sp"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:text="Thursday-2019"
+                                    android:background="@drawable/rectangle" android:drawableRight="@drawable/ic_action_arrow_drop_down"
+                                    android:drawablePadding="8dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="4dp"
+                                    android:paddingBottom="4dp"
+                                    android:paddingRight="4dp"
+                                    android:id="@+id/textViewForEndDateXML"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!--Setting the leave time-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="3"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <!--Layout for start date picking-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:background="@drawable/rectangle"
+                                android:layout_marginBottom="3dp"
+                                android:padding="5dp">
+
+                                <Spinner
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:text="Monday-2019"
+                                    android:drawablePadding="8dp"
+                                    android:id="@+id/spinnerForTime1XML"/>
+
+                            </LinearLayout>
+                            <!--Layout for start date picking-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_marginTop="3dp"
+                                android:background="@drawable/rectangle"
+                                android:padding="5dp">
+
+                                <Spinner
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:text="Monday-2019"
+                                    android:drawablePadding="8dp"
+                                    android:id="@+id/spinnerForTime2XML"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </TableLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

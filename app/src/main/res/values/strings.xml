@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Apply Leave</string>
+    <string name="leave_type">Leave Type</string>
+    <string name="leave_count">Leave Count</string>
+    <string name="from_date">From Date</string>
+    <string name="to_date">To Date</string>
+</resources>
