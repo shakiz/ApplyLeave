@@ -57,7 +57,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/rectangle"
                                 android:padding="5dp"
-                                android:layout_margin="8dp"
+                                android:layout_marginLeft="4dp"
                                 android:orientation="vertical">
 
                                 <Spinner
@@ -188,7 +188,6 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <!--Layout for start date picking-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -205,7 +204,6 @@
                                     android:id="@+id/spinnerForTime1XML"/>
 
                             </LinearLayout>
-                            <!--Layout for start date picking-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -232,8 +230,123 @@
 
             </android.support.v7.widget.CardView>
 
+            <!--Layout for inCharge and supervisor spinner-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:weightSum="2">
+
+                <!--In charge spinner layout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/inCharge"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:textSize="13sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rectangle">
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/inChargeSpinnerXML"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Supervisor spinner layout-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/supervisor"
+                        android:layout_marginBottom="4dp"
+                        android:gravity="center"
+                        android:textSize="13sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rectangle">
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/supervisorSpinnerXML"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--Layout for reasoning-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:text="@string/reason"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_reason"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/reasonEditTextXML"/>
+
+            </LinearLayout>
+
         </TableLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_action_check"
+            android:layout_marginRight="16dp"
+            android:paddingRight="5dp"
+            android:id="@+id/submitButtonXML"/>
+    </LinearLayout>
+
 
 </RelativeLayout>
