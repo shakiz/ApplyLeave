@@ -1,12 +1,19 @@
 package com.example.applyleave;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> leaveTypeDataArrayList,pickHourArrayList,superVisorArrayList,inChargeArrayList;
     private TextView startDatePickerTextView,endDatePickerTextView;
+    private String startDateStr,endDateStr,TAG="MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,58 @@ public class MainActivity extends AppCompatActivity {
         setAdapterSpinner(time2Spinner,pickHourArrayList);
         setAdapterSpinner(supervisorSpinner,superVisorArrayList);
         setAdapterSpinner(incChargeSpinner,inChargeArrayList);
+
+        //Setting the on click listener for date picker,Which will be useful to pick a date and set the picked date to the textView
+        startDatePickerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar=Calendar.getInstance();
+                int calYear = calendar.get(Calendar.YEAR);
+                int calMonth = calendar.get(Calendar.MONTH);
+                final int calDay = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog=new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        startDateStr=getDay(year,month,dayOfMonth) + " - "+dayOfMonth+" "+getMonthName(year,month,dayOfMonth);
+                        startDatePickerTextView.setText(startDateStr);
+                    }
+                },calYear,calMonth,calDay);
+                datePickerDialog.show();
+            }
+        });
+        endDatePickerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar=Calendar.getInstance();
+                int calYear=-calendar.get(Calendar.YEAR);
+                int calMonth=calendar.get(Calendar.MONTH);
+                int calDay=calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog=new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        endDateStr =getDay(year,month,dayOfMonth) + " - "+dayOfMonth+" "+getMonthName(year,month,dayOfMonth);
+                        endDatePickerTextView.setText(endDateStr);
+                    }
+                },calYear,calMonth,calDay);
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    //This method returns only the user selected day
+    public String getDay(int selectedYear,int selectedMonth,int selectedDay){
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
+        Date date = new Date(selectedYear, selectedMonth, selectedDay-1);
+        Log.v(TAG,"Day : "+simpledateformat.format(date));
+        return simpledateformat.format(date);
+    }
+    //This method returns only the user selected month
+    public String getMonthName(int selectedYear,int selectedMonth,int selectedDay){
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("MMMM");
+        Date date=new Date(selectedYear,selectedMonth,selectedDay);
+        Log.v(TAG,"Month : "+simpledateformat.format(date));
+        return simpledateformat.format(date);
     }
 
     private void setDataPickHour() {
