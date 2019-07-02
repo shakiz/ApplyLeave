@@ -8,4 +8,5 @@
     <string name="supervisor">Supervisor</string>
     <string name="reason">Reason</string>
     <string name="enter_reason">Enter Reason</string>
+    <string name="selectHour">Select Hour</string>
 </resources>

@@ -1,14 +1,23 @@
-package com.example.applyleave;
+package com.example.applyleave.Activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.applyleave.Utilities.DatabaseHelper;
+import com.example.applyleave.Model.DataModel;
+import com.example.applyleave.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,9 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner leaveTypeSpinner,time1Spinner, time2Spinner,supervisorSpinner,incChargeSpinner;
     private ArrayAdapter<String> arrayAdapter;
+    private TextInputEditText reasonInputEditText;
     private ArrayList<String> leaveTypeDataArrayList,pickHourArrayList,superVisorArrayList,inChargeArrayList;
     private TextView startDatePickerTextView,endDatePickerTextView;
-    private String startDateStr,endDateStr,TAG="MainActivity";
+    private String startDateStr="",endDateStr="",leaveTypeStr="",timeFirstStr="",timeSecondStr="",supervisorStr="",inChargeStr="",                      reasonStr="",TAG="MainActivity";
+    private int totalLeave=0;
+    private FloatingActionButton submitButton;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         startDateStr=getDay(year,month,dayOfMonth) + " - "+dayOfMonth+" "+getMonthName(year,month,dayOfMonth);
                         startDatePickerTextView.setText(startDateStr);
+                        Log.v(TAG,startDateStr);
                     }
                 },calYear,calMonth,calDay);
                 datePickerDialog.show();
@@ -67,11 +81,97 @@ public class MainActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog=new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        endDateStr =getDay(year,month,dayOfMonth) + " - "+dayOfMonth+" "+getMonthName(year,month,dayOfMonth);
+                        endDateStr = getDay(year,month,dayOfMonth) + " - "+dayOfMonth+" "+getMonthName(year,month,dayOfMonth);
                         endDatePickerTextView.setText(endDateStr);
+                        Log.v(TAG,endDateStr);
                     }
                 },calYear,calMonth,calDay);
                 datePickerDialog.show();
+            }
+        });
+
+        leaveTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                leaveTypeStr=parent.getItemAtPosition(position).toString();
+                Log.v(TAG,leaveTypeStr);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        time1Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                timeFirstStr=parent.getItemAtPosition(position).toString();
+                Log.v(TAG,timeFirstStr);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        time2Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                timeSecondStr=parent.getItemAtPosition(position).toString();
+                Log.v(TAG,timeSecondStr);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        supervisorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                supervisorStr=parent.getItemAtPosition(position).toString();
+                Log.v(TAG,supervisorStr);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        incChargeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                inChargeStr=parent.getItemAtPosition(position).toString();
+                Log.v(TAG,inChargeStr);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reasonStr=reasonInputEditText.getText().toString();
+                if (reasonStr.isEmpty() || leaveTypeStr.isEmpty() || timeFirstStr.isEmpty() || timeSecondStr.isEmpty()
+                    || startDateStr.isEmpty() || endDateStr.isEmpty() || supervisorStr.isEmpty() || inChargeStr.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please check your data",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    DataModel dataModel=new DataModel(2,supervisorStr,inChargeStr,reasonStr,leaveTypeStr,timeFirstStr,timeSecondStr,startDateStr,endDateStr);
+                    if (databaseHelper.addRecord(dataModel)==true){
+                        Toast.makeText(getApplicationContext(),"Record added successfully",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this,LeaveRecordActivity.class));
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Reacord not added",Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
@@ -85,14 +185,13 @@ public class MainActivity extends AppCompatActivity {
     }
     //This method returns only the user selected month
     public String getMonthName(int selectedYear,int selectedMonth,int selectedDay){
-        SimpleDateFormat simpledateformat = new SimpleDateFormat("MMMM");
+        SimpleDateFormat simpledateformat = new SimpleDateFormat("MMM");
         Date date=new Date(selectedYear,selectedMonth,selectedDay);
         Log.v(TAG,"Month : "+simpledateformat.format(date));
         return simpledateformat.format(date);
     }
 
     private void setDataPickHour() {
-        pickHourArrayList.add("Select Hour");
         pickHourArrayList.add("1st Half");
         pickHourArrayList.add("2nd Half");
     }
@@ -116,10 +215,10 @@ public class MainActivity extends AppCompatActivity {
         inChargeArrayList.add("Chris Woakes");
     }
 
-    private void setAdapterSpinner(Spinner Spinner,ArrayList<String> dataArrayList) {
-        arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,dataArrayList);
+    private void setAdapterSpinner(Spinner spinner,ArrayList<String> dataArrayList) {
+        arrayAdapter=new ArrayAdapter<>(this,R.layout.spinner_item,dataArrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner.setAdapter(arrayAdapter);
+        spinner.setAdapter(arrayAdapter);
     }
 
     public void initialize(){
@@ -130,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
         supervisorSpinner=findViewById(R.id.supervisorSpinnerXML);
         incChargeSpinner=findViewById(R.id.inChargeSpinnerXML);
         endDatePickerTextView=findViewById(R.id.textViewForEndDateXML);
+        reasonInputEditText=findViewById(R.id.reasonTextInputXML);
+        submitButton=findViewById(R.id.submitButtonXML);
+        databaseHelper=new DatabaseHelper(getApplicationContext());
         leaveTypeDataArrayList=new ArrayList<>();
         pickHourArrayList=new ArrayList<>();
         superVisorArrayList=new ArrayList<>();
